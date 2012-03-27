@@ -27,6 +27,7 @@ class SampleForwardingShell extends AppShell {
 				->originalBody($body)
 				->from($overview['to'])
 				->to($this->to)
+				->subject($overview['subject'])
 				->send();
 		}
 	}

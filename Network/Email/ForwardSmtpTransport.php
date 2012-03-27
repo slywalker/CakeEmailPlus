@@ -21,19 +21,21 @@ class ForwardSmtpTransport extends SmtpTransport {
 		$headers = $this->_cakeEmail->getHeaders(array('from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc', 'subject'));
 		$headers = $this->_headersToString($headers);
 
+		$originalHeader = $this->_cakeEmail->originalHeader();
 		$originalHeader = preg_replace(array(
-			'/^(To)/i',
-			'/^(Cc)/i',
-			'/^(From)/i',
-			'/^(Date)/i',
-			'/^(Sender)/i',
-			'/^(Reply-To)/i',
-			'/^(X-Mailer)/i',
-			'/^(Message-ID)/i',
-			'/^(Return-Path)/i',
-			'/^(Disposition-Notification-To)/i',
-		), 'Original-$1', $this->_cakeEmail->originalHeader());
-
+			'/^(To)/im',
+			'/^(Cc)/im',
+			'/^(From)/im',
+			'/^(Date)/im',
+			'/^(Sender)/im',
+			'/^(Subject)/im',
+			'/^(Reply-To)/im',
+			'/^(X-Mailer)/im',
+			'/^(Message-ID)/im',
+			'/^(Return-Path)/im',
+			'/^(Disposition-Notification-To)/im',
+		), 'Original-$1', $originalHeader);
+		var_dump($originalHeader);
 		$headers .= "\r\n" . $originalHeader;
 
 		$message = $this->_cakeEmail->originalBody();
