@@ -13,7 +13,7 @@ class ForwardEmail extends CakeEmail {
 		if (is_null($string)) {
 			return $this->_originalHeader;
 		} else {
-			$this->_originalHeader = $string;
+			$this->_originalHeader = (string)$string;
 			return $this;
 		}
 	}
@@ -22,7 +22,7 @@ class ForwardEmail extends CakeEmail {
 		if (is_null($string)) {
 			return $this->_originalBody;
 		} else {
-			$this->_originalBody = $string;
+			$this->_originalBody = (string)$string;
 			return $this;
 		}
 	}
@@ -75,6 +75,10 @@ class ForwardEmail extends CakeEmail {
 			} else {
 				$headers['Message-ID'] = $this->_messageId;
 			}
+		}
+
+		if ($include['subject']) {
+			$headers['Subject'] = $this->_subject;
 		}
 
 		return $headers;
