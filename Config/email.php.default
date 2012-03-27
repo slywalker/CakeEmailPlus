@@ -1,0 +1,34 @@
+<?php
+class EmailConfig {
+
+	// $email = new ImapEmail('imap');
+	public $imap = array(
+		'transport' => 'Mail',
+		'host' => 'imap.gmail.com',
+		'port' => 993,
+		'flags' => '/imap/ssl',
+		'mailbox' => 'INBOX',
+		'username' => 'user',
+		'password' => 'secret',
+	);
+
+	// $email = new ImapEmail('forwardImap');
+	public $forwardImap = array(
+		'host' => 'imap.gmail.com',
+		'port' => 993,
+		'flags' => '/imap/ssl',
+		'mailbox' => 'INBOX',
+		'username' => 'user',
+		'password' => 'secret',
+	);
+
+	// $email = new ForwordEmail('forwardSmtp');
+	public $forwardSmtp = array(
+		'host' => 'ssl://smtp.gmail.com',
+		'port' => 465,
+		'username' => 'user',
+		'password' => 'secret',
+	);
+
+
+}
