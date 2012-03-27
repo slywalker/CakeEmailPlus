@@ -35,7 +35,6 @@ class ForwardSmtpTransport extends SmtpTransport {
 			'/^(Return-Path)/im',
 			'/^(Disposition-Notification-To)/im',
 		), 'Original-$1', $originalHeader);
-		var_dump($originalHeader);
 		$headers .= "\r\n" . $originalHeader;
 
 		$message = $this->_cakeEmail->originalBody();
