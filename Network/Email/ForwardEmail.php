@@ -3,7 +3,7 @@ App::uses('CakeEmail', 'Network/Email');
 
 class ForwardEmail extends CakeEmail {
 
-	protected $_transportName = 'ForwardSmtp';
+	protected $_transportName = 'EmailPlus.ForwardSmtp';
 
 	protected $_originalHeader = null;
 
