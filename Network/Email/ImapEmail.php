@@ -27,6 +27,10 @@ class ImapEmail extends CakeEmail {
 		return $this;
 	}
 
+	public function resource() {
+		return $this->_resource;
+	}
+
 	public function search($criteria = 'UNSEEN') {
 		$results = (imap_search($this->_resource, $criteria)) ?: array();
 		return $results;
@@ -50,6 +54,10 @@ class ImapEmail extends CakeEmail {
 
 	public function body($messageId) {
 		return imap_body($this->_resource, $messageId);
+	}
+
+	public function bodyStruct($messageId) {
+		return imap_bodystruct($this->_resource, $messageId);
 	}
 
 	public function setFlag($messageId, $flag = '\Seen') {
