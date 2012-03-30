@@ -27,41 +27,10 @@ class ImapEmail extends CakeEmail {
 		return $this;
 	}
 
-	public function resource() {
-		return $this->_resource;
-	}
-
-	public function search($criteria = 'UNSEEN') {
-		$results = (imap_search($this->_resource, $criteria)) ?: array();
-		return $results;
-	}
-
-	public function fetchOverview($messageId) {
-		$overview = current(imap_fetch_overview($this->_resource, $messageId));
-		$from = current(imap_rfc822_parse_adrlist($overview->from, null));
-		$to = current(imap_rfc822_parse_adrlist($overview->to, null));
-		return array(
-			'from' => $from->mailbox . '@' . $from->host,
-			'to' => $to->mailbox . '@' . $to->host,
-			'subject' => mb_decode_mimeheader($overview->subject),
-			'date' => $overview->date,
-		);
-	}
-
-	public function fetchHeader($messageId) {
-		return imap_fetchheader($this->_resource, $messageId);
-	}
-
-	public function body($messageId) {
-		return imap_body($this->_resource, $messageId);
-	}
-
-	public function bodyStruct($messageId) {
-		return imap_bodystruct($this->_resource, $messageId);
-	}
-
-	public function setFlag($messageId, $flag = '\Seen') {
-		return imap_setflag_full($this->_resource, $messageId, $flag);
+	public function __call($name, $arguments) {
+		$function = 'imap_' . strtolower($name);
+		array_unshift($arguments, $this->_resource);
+		return call_user_func_array($function, $arguments);
 	}
 
 	public function __destruct() {

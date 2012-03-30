@@ -12,22 +12,24 @@ class SampleForwardingShell extends AppShell {
 
 		$imap = new ImapEmail('forwardImap');
 
-		$results = $imap->search('UNSEEN');
+		$results = ($imap->search('UNSEEN')) ?: array();
 
 		foreach ($results as $mid) {
-			$overview = $imap->fetchOverview($mid);
+			$headerInfo = $imap->headerInfo($mid);
+			$objTo = current($headerInfo->to);
+			$to = $objTo->mailbox . '@' . $objTo->host;
+			$subject = mb_decode_mimeheader($headerInfo->subject);
 
 			$header = $imap->fetchHeader($mid);
-
 			$body = $imap->body($mid);
 
 			$res = $email->reset()
 				->config('forwardSmtp')
 				->originalHeader($header)
 				->originalBody($body)
-				->from($overview['to'])
+				->from($to)
 				->to($this->to)
-				->subject($overview['subject'])
+				->subject($subject)
 				->send();
 		}
 	}
