@@ -39,7 +39,7 @@ class ImapEmail extends CakeEmail {
 		return array(
 			'from' => $from->mailbox . '@' . $from->host,
 			'to' => $to->mailbox . '@' . $to->host,
-			'subject' => imap_utf8($overview->subject),
+			'subject' => mb_decode_mimeheader($overview->subject),
 			'date' => $overview->date,
 		);
 	}
